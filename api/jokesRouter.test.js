@@ -47,13 +47,18 @@ describe('server.js', () => {
 
     describe('[DELETE] / - delete joke', () => {
       it("removes joke from db", async () => {
-        // const [joke_id] = await db("jokes").insert(joke1)
-        // let joke = await db('jokes').where({joke_id}).first()
-        // expect(joke).toBeTruthy()
-        // await request(server).delete("/jokes/" + joke_id)
-        // joke = await db("jokes").where({joke_id}).first()
-        // expect(joke).toBeFalsy()
+        const [joke_id] = await db("jokes").insert(joke1)
+        let joke = await db('jokes').where({joke_id}).first()
+        expect(joke).toBeTruthy()
+        await request(server).delete("/jokes/" + joke_id)
+        joke = await db("jokes").where({joke_id}).first()
+        expect(joke).toBeFalsy()
       })
+      it("respond with the deleted joke", async () => {
+        await db("jokes").insert(joke1)
+        let joke = await request(server).delete("/jokes/1")
+        expect(joke.body).toMatchObject(joke1)
+    })
     })
   });
 
