@@ -4,7 +4,7 @@
 
 
 describe('server.js', () => {
-    test('should set testing environment', () => {
+    it('should set testing environment', () => {
       expect(process.env.NODE_ENV).toBe('testing');
     });
   });
